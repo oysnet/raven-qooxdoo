@@ -37,7 +37,7 @@ qx.Class.define("raven.demo.Application",
     {
       // Call super class
       this.base(arguments);
-      new raven.log.appender.Raven("http://8fd6ada17bd24cb0908bb3248e70fca8@slogger.alpha.oxys.net/3", true);
+      new raven.log.appender.Raven("", true);
 
       /*
       -------------------------------------------------------------------------
