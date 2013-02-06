@@ -1,0 +1,38 @@
+{
+  "info" : 
+  {
+    "name" : "raven-qooxdoo Demo",
+
+    "summary" : "raven-qooxdoo Demo",
+    "description" : "This is a skeleton for a qooxdoo contribution demo.",
+    
+    "homepage" : "http://demo.qooxdoo.org/contrib/raven-qooxdoo",
+
+    "license" : "MIT",
+    "authors" : 
+    [
+      {
+        "name" : "David Charbonnier",
+        "email" : "d.charbonnier@oxys.net"
+      },
+      {
+        "name" : "Jean-Hugues Pinson",
+        "email" : "jh.pinson@oxys.net"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["2.2"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "raven.demo",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "application"
+  }
+}
+

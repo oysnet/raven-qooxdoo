@@ -1,0 +1,38 @@
+{
+  "info" : 
+  {
+    "name" : "raven-qooxdoo",
+
+    "summary" : "Qooxdoo logger for sentry",
+    "description" : "Qooxdoo logger for sentry",
+    
+    "homepage" : "https://github.com/oxys-net/raven-qooxdoo",
+
+    "license" : "MIT",
+    "authors" : 
+    [
+      {
+        "name" : "David Charbonnier",
+        "email" : "d.charbonnier@oxys.net"
+      },
+      {
+        "name" : "Jean-Hugues Pinson",
+        "email" : "jh.pinson@oxys.net"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["2.2"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "raven",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "contribution"
+  }
+}
+
