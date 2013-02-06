@@ -37,7 +37,10 @@ qx.Class.define("raven.demo.Application",
     {
       // Call super class
       this.base(arguments);
-      new raven.log.appender.Raven("", true);
+
+      var DSN = "PASTE YOUR SENTRY DSN HERE"
+
+      new raven.log.appender.Raven(DSN, true);
 
       /*
       -------------------------------------------------------------------------
