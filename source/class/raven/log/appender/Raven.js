@@ -12,7 +12,7 @@ qx.Class.define("raven.log.appender.Raven",
     }
     this.__rpcUrl += this.__getAuthQueryString(uri.user);
     this.base(arguments);
-    this.__dateFormater = new qx.util.format.DateFormat(qx.util.format.DateFormat.ISO_MASKS.isoUtcDateTime)
+    this.__dateFormater = new qx.util.format.DateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
 
     // Finally register to log engine
     qx.log.Logger.register(this);
