@@ -45,6 +45,14 @@ qx.Class.define("raven.log.appender.Raven",
         this.__user.email = email;
       }
     },
+    
+    getLevel : function (level) {
+      if (level == 'warn') {
+        return 'warning';
+      }
+      return level;
+    },
+    
     process : function(entry) {
       for (var i = 0, l = entry.items.length; i < l; i++)
       {
@@ -52,7 +60,7 @@ qx.Class.define("raven.log.appender.Raven",
         var data =
         {
           message : item.text,
-          level : entry.level,
+          level : this.getLevel(entry.level),
           timestamp : entry.time,
           extra : {
             offset : entry.offset
