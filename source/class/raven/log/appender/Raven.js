@@ -1,8 +1,15 @@
 qx.Class.define("raven.log.appender.Raven",
 {
   extend : qx.core.Object,
-  construct : function(dsn, registerGlobalError)
+  construct : function(dsn, registerGlobalError, extra)
   {
+
+    if (extra) {
+      this.__extra = extra;
+    } else {
+      this.__extra = {};
+    }
+
     //Setup raven with DSN
     var uri = this.__parseUri(dsn), lastSlash = uri.path.lastIndexOf('/'), path = uri.path.substr(1, lastSlash);
     this.__project = ~~uri.path.substr(lastSlash + 1);
@@ -26,6 +33,7 @@ qx.Class.define("raven.log.appender.Raven",
   },
   members :
   {
+    __extra : null,
     __project : null,
     __rpcUrl : null,
     __dateFormater : null,
@@ -62,31 +70,21 @@ qx.Class.define("raven.log.appender.Raven",
           message : item.text,
           level : this.getLevel(entry.level),
           timestamp : entry.time,
-          extra : {
+          extra : qx.lang.Object.mergeWith({
             offset : entry.offset
-          }
+          }, this.__extra)
         }
-        
+
+        if (this.__user) {
+          data.extra.user = this.__user;
+        }
+
         if (item.trace && item.trace.length)
         {
           data['sentry.interfaces.Stacktrace'] = {
             frames : []
           };
 
-          /*
-          sentry.interfaces.Stacktrace
-            [
-              filename / function / module
-              lineno
-              colno
-              abs_path
-              context_line
-              pre_context
-              post_context
-              in_app
-              vars {}
-            ]
-          */
           for (var j = 0, m = item.trace.length; j < m; j++)
           {
             var trace = {
@@ -106,6 +104,7 @@ qx.Class.define("raven.log.appender.Raven",
         if (entry.object) {
           data.extra.object_hash = entry.object;
         }
+
         this.__send(data);
       }
     },
@@ -122,17 +121,7 @@ qx.Class.define("raven.log.appender.Raven",
     },
     __getHttpData : function()
     {
-      /*
-      Sentry message format :
-        sentry.interfaces.Http
-          url
-          method
-          data
-          query_string
-          cookies
-          headers
-          env
-      */
+     
       var http =
       {
         url : window.location.href,
@@ -160,44 +149,11 @@ qx.Class.define("raven.log.appender.Raven",
         timestamp : new Date(),
         'sentry.interfaces.Http' : this.__getHttpData()
       }, message);
+
       if (this.__user) {
         data['sentry.interfaces.User'] = this.__user;
       }
 
-      //platform
-
-      //culprit
-
-      //tags
-
-      //server_name
-
-      //modules
-
-      //extra
-
-      /*
-       sentry.interfaces.Message
-          message (1000)
-
-       sentry.interfaces.Exception
-        type
-        value
-        module
-
-       sentry.interfaces.Stacktrace
-        []
-          filename / function / module
-          lineno
-          colno
-          abs_path
-          context_line
-          pre_context
-          post_context
-          in_app
-          vars {}
-
-      */
       data.timestamp = this.__dateFormater.format(data.timestamp);
       new Image().src = this.__rpcUrl + '&sentry_data=' + encodeURIComponent(qx.util.Serializer.toJson(data));
     }
