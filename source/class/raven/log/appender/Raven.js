@@ -66,7 +66,8 @@ qx.Class.define("raven.log.appender.Raven",
             offset : entry.offset
           }
         }
-        if (item.trace)
+        
+        if (item.trace && item.trace.length)
         {
           data['sentry.interfaces.Stacktrace'] = {
             frames : []
